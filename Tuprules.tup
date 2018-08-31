@@ -1,0 +1,13 @@
+.gitignore
+CC_FLAGS += -Wall
+LD_FLAGS += -O3
+
+ifeq (@(TUP_PLATFORM),win32)
+	export HOME
+	export HOMEPATH
+	export HOMEDRIVE
+	export NUMBER_OF_PROCESSORS
+endif
+
+!CC = |> ^ CC %b^ cmd /c emcc %f -o %o $(CC_FLAGS) |> bin/%B.bc
+!LD = |> ^ LD %o^ cmd /c emcc %f -o %o $(LD_FLAGS) |>

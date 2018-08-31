@@ -1,0 +1,26 @@
+# OpenH264 API
+API = $(TUP_CWD)/api
+API_INC += -I$(API)/svc
+
+# OpenH264 Common
+COMMON = $(TUP_CWD)/common
+COMMON_INC += -I$(COMMON)/inc
+
+# OpenH264 Processing
+PROCESSING = $(TUP_CWD)/processing
+PROCESSING_INC += -I$(PROCESSING)/interface
+PROCESSING_INC += -I$(PROCESSING)/src/common
+PROCESSING_INC += -I$(PROCESSING)/src/adaptivequantization
+PROCESSING_INC += -I$(PROCESSING)/src/downsample
+PROCESSING_INC += -I$(PROCESSING)/src/scrolldetection
+PROCESSING_INC += -I$(PROCESSING)/src/vaacalc
+
+# OpenH264 Decoder
+DECODER = $(TUP_CWD)/decoder
+DECODER_INC += -I$(DECODER)/core/inc
+DECODER_INC += -I$(DECODER)/plus/inc
+
+# OpenH264 Encoder
+ENCODER = $(TUP_CWD)/encoder
+ENCODER_INC += -I$(ENCODER)/core/inc
+ENCODER_INC += -I$(ENCODER)/plus/inc

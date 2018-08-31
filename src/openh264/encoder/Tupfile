@@ -1,0 +1,11 @@
+include_rules
+CC_FLAGS += $(API_INC)
+CC_FLAGS += $(COMMON_INC)
+CC_FLAGS += $(PROCESSING_INC)
+CC_FLAGS += $(ENCODER_INC)
+
+ENCODER_SRC += core/src/*.cpp
+ENCODER_SRC += plus/src/*.cpp
+
+: foreach $(ENCODER_SRC) |> !CC |> {OBJ}
+: {OBJ} |> !LD |> encoder.bc

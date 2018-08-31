@@ -1,0 +1,4 @@
+include_rules
+PUBLIC_OBJ += ../src/openh264/openh264.bc
+
+: $(PUBLIC_OBJ) |> !LD |> index.html | %O.js %O.wasm

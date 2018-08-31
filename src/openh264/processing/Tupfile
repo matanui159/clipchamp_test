@@ -1,0 +1,18 @@
+include_rules
+CC_FLAGS += $(API_INC)
+CC_FLAGS += $(COMMON_INC)
+CC_FLAGS += $(PROCESSING_INC)
+
+PROCESSING_SRC += src/adaptivequantization/*.cpp
+PROCESSING_SRC += src/backgrounddetection/*.cpp
+PROCESSING_SRC += src/common/*.cpp
+PROCESSING_SRC += src/complexityanalysis/*.cpp
+PROCESSING_SRC += src/denoise/*.cpp
+PROCESSING_SRC += src/downsample/*.cpp
+PROCESSING_SRC += src/imagerotate/*.cpp
+PROCESSING_SRC += src/scenechangedetection/*.cpp
+PROCESSING_SRC += src/scrolldetection/*.cpp
+PROCESSING_SRC += src/vaacalc/*.cpp
+
+: foreach $(PROCESSING_SRC) |> !CC |> {OBJ}
+: {OBJ} |> !LD |> processing.bc

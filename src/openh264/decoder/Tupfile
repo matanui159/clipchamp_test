@@ -1,0 +1,10 @@
+include_rules
+CC_FLAGS += $(API_INC)
+CC_FLAGS += $(COMMON_INC)
+CC_FLAGS += $(DECODER_INC)
+
+DECODER_SRC += core/src/*.cpp
+DECODER_SRC += plus/src/*.cpp
+
+: foreach $(DECODER_SRC) |> !CC |> {OBJ}
+: {OBJ} |> !LD |> decoder.bc

@@ -1,0 +1,8 @@
+include_rules
+CC_FLAGS += $(API_INC)
+CC_FLAGS += $(COMMON_INC)
+
+COMMON_SRC += src/*.cpp
+
+: foreach $(COMMON_SRC) |> !CC |> {OBJ}
+: {OBJ} |> !LD |> common.bc

@@ -1,0 +1,7 @@
+include_rules
+OPENH_OBJ += common/common.bc
+OPENH_OBJ += processing/processing.bc
+OPENH_OBJ += decoder/decoder.bc
+OPENH_OBJ += encoder/encoder.bc
+
+: $(OPENH_OBJ) |> !LD |> openh264.bc
