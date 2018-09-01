@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <emscripten.h>
+#include <codec_api.h>
 
 void convert(int width, int height, int fps, int size, const void* data) {
-	printf("Width: %i\nHeight: %i\n FPS: %i\nArray: %i\n", width, height, fps, size);
+	
 }
 
 int main() {
