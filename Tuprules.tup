@@ -1,5 +1,5 @@
 .gitignore
-CC_FLAGS += -Wall
+CC_FLAGS += -Wall -O3
 LD_FLAGS += -O3
 
 ifeq (@(TUP_PLATFORM),win32)

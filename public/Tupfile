@@ -1,4 +1,6 @@
 include_rules
-PUBLIC_OBJ += ../src/openh264/openh264.bc
+SRC = ../src
+PUBLIC_OBJ += $(SRC)/openh264/openh264.bc
+PUBLIC_OBJ += $(SRC)/main/main.bc
 
-: $(PUBLIC_OBJ) |> !LD |> index.html | %O.js %O.wasm
+: $(PUBLIC_OBJ) |> !LD -s EXPORTED_FUNCTIONS=['_main','_convert'] |> index.js | %O.wasm

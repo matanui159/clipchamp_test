@@ -1,0 +1,7 @@
+include_rules
+CC_FLAGS += $(API_INC)
+
+MAIN_SRC += src/*.c
+
+: foreach $(MAIN_SRC) |> !CC |> {OBJ}
+: {OBJ} |> !LD |> main.bc
