@@ -26,8 +26,8 @@ encoder_t* encoder_create(int width, int height, int fps) {
 	params.iPicHeight = height;
 	params.fMaxFrameRate = fps;
 	params.iUsageType = CAMERA_VIDEO_REAL_TIME;
-	params.iTargetBitrate = 10000000;
-	params.iRCMode = RC_QUALITY_MODE;
+	params.iTargetBitrate = 1000000;
+	params.iRCMode = RC_BITRATE_MODE;
 	result = enc->svc->Initialize(&params);
 	assert(result == 0);
 
