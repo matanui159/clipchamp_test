@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"*.h": "c",
+		"*.make": "makefile",
+		"initializer_list": "c",
+		"string_view": "c"
+	}
+}

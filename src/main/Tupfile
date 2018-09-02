@@ -1,7 +1,7 @@
 include_rules
-CC_FLAGS += $(API_INC)
+CC_FLAGS += -I../openh264/api
 
-MAIN_SRC += src/*.c
+MAIN_SRC += src/*.c src/*.cpp
 
 : foreach $(MAIN_SRC) |> !CC |> {OBJ}
 : {OBJ} |> !LD |> main.bc

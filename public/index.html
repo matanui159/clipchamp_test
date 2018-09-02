@@ -6,17 +6,19 @@
 				font-family: sans-serif;
 				margin: 4px;
 			}
+			#download {
+				display: none;
+			}
 		</style>
 		<script src="index.js"></script>
 	</head>
 	<body>
-		<form>
-			<input id="file" type="file"><br>
-			<input id="width" type="number" placeholder="Width"><br>
-			<input id="height" type="number" placeholder="Height"><br>
-			<input id="fps" type="number" placeholder="FPS"><br>
-			<input id="button" type="button" value="Convert"><br>
-			<p id="state"></p>
-		</form>
+		<input id="file" type="file"><br>
+		<input id="width" type="number" placeholder="Width"><br>
+		<input id="height" type="number" placeholder="Height"><br>
+		<input id="fps" type="number" placeholder="FPS"><br>
+		<input id="button" type="button" value="Convert"><br>
+		<p id="state"></p>
+		<a id="download"></a>
 	</body>
 </html>

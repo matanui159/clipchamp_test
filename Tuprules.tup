@@ -1,6 +1,6 @@
 .gitignore
 CC_FLAGS += -Wall -O3
-LD_FLAGS += -O3
+LD_FLAGS += -O3 -s ALLOW_MEMORY_GROWTH=1
 
 ifeq (@(TUP_PLATFORM),win32)
 	export HOME
