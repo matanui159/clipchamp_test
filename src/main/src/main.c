@@ -1,5 +1,32 @@
 #include <emscripten.h>
 #include "encoder.h"
+#include "display.h"
+
+static int g_offset = 0;
+
+static void loop() {
+	int data_size = EM_ASM_INT(return data_size);
+	byte_t* data = (byte_t*)EM_ASM_INT(return data);
+	int width = EM_ASM_INT(return id("width").value);
+	int height = EM_ASM_INT(return id("height").value);
+	int fps = EM_ASM_INT(return id("fps").value);
+
+	int frame_size = width * height;
+	frame_size += frame_size / 2;
+	int offset = g_offset++ * frame_size;
+	if (offset + frame_size > data_size) {
+		offset = g_offset = 0;
+	}
+
+	if (width > 0 && height > 0 && fps > 0 && data != NULL) {
+		EM_ASM(id("button").disabled = false);
+		emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, 1000 / fps);
+		display_frame(width, height, data + offset);
+	} else {
+		EM_ASM(id("button").disabled = true);
+		emscripten_set_main_loop_timing(EM_TIMING_RAF, 1);
+	}
+}
 
 static void download(int size, const byte_t* data) {
 	EM_ASM({
@@ -10,7 +37,6 @@ static void download(int size, const byte_t* data) {
 		id("download").href = url;
 		id("download").click();
 		window.URL.revokeObjectURL(url);
-		id("state").innerHTML = "Done!";
 	}, size, data);
 }
 
@@ -37,24 +63,41 @@ int main() {
 			return document.getElementById(i);
 		};
 
-		id("button").onclick = function(event) {
-			id("state").innerHTML = "Reading...";
-			id("download").download = id("file").files[0].name + ".264";
-
-			var reader = new FileReader();
-			reader.onload = function(event) {
-				id("state").innerHTML = "Converting...";
-				var array = new Uint8Array(event.target.result);
-				ccall("convert", "number", ["number", "number", "number", "number", "array"], [
-					id("width").value,
-					id("height").value,
-					id("fps").value,
-					array.byteLength,
-					array
-				]);
-			};
-			reader.readAsArrayBuffer(id("file").files[0]);
+		data_size = 0;
+		data = 0;
+		var reader = new FileReader();
+		reader.onload = function() {
+			var array = new Uint8Array(reader.result);
+			data_size = array.byteLength;
+			data = _malloc(data_size);
+			HEAPU8.set(array, data);
 		};
+
+		id("file").onchange = function() {
+			_free(data);
+			data = 0;
+			var file = id("file").files[0];
+			if (file) {
+				id("download").download = file.name + ".264";
+				reader.readAsArrayBuffer(file);
+			}
+		};
+
+		id("button").onclick = function() {
+			_convert(
+				id("width").value,
+				id("height").value,
+				id("fps").value,
+				data_size,
+				data
+			);
+		};
+
+		Module.canvas = id("canvas");
+		Module.doNotCaptureKeyboard = true;
 	);
+
+	display_init();
+	emscripten_set_main_loop(loop, 0, 0);
 	return 0;
 }
